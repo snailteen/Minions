@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width:200px;
+				height:200px;
+				background-color: #000000;
+				position: absolute;
+			}
+		</style>
+	<script src="touch.js"></script>
+	</head>
+	<body>
+<div id="div1"></div>
+	</body>
+	<script type="text/javascript">
+//		var div1=document.getElementById('div1');
+		touch.on("#div1","touchstart",function(e){
+			e.preventDefault();
+		});
+		var r=0;
+		
+		touch.on("#div1","rotate",function(e){
+			var newAngle=e.rotation+r;
+			if(e.fingerStatus=="end"){
+				r=newAngle;
+			}
+			
+			this.style.webkitTransform="rotate("+newAngle+"deg)";
+		});
+		
+	</script>
+</html>

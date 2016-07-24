@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>Document</title>
+<style type="text/css">
+#div1{
+	height: 200px;
+	width: 200px;
+	background-color: #ccc;
+	position: absolute;
+}
+</style>
+<script src="touch.js"></script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+<script type="text/javascript">
+var div1=document.getElementById("div1");
+var index=10;
+var timer=null;
+touch.on("#div1","touchstart",function (ev){
+	timer=setInterval(function(){
+		index--;
+		div1.innerHTML=index;
+		if(index<=0){
+			alert('game over');
+			clearInterval(timer);
+		}
+	},1800);
+	ev.preventDefault();
+
+	
+});
+
+/*touch.on("#div1","swipe",function (){
+
+	console.log("滑动了");
+});*/
+touch.on("#div1","swipeup",function (){
+	
+
+alert(index);
+	// console.log("向右滑动了");
+	alert("上");
+});
+touch.on("#div1","swipeleft",function (){
+
+	// console.log("向左滑动了");
+	alert("←");
+});
+</script>
+</html>
