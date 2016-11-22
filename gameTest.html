@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0 auto;
+				padding: 0;		
+		}
+			body{background-color: lightblue;}
+			#wrap {
+				background-color: lightblue;
+				overflow: hidden;
+				position: relative;
+				width: 100%;
+				height: 540px;
+				/*border:1px solid red;*/
+		}
+			#banana {
+				width: 30px;
+				height: 60px;
+				/*background-color: yellow;*/
+				border-radius: 20px;
+				top: -80px;
+				position: absolute;
+				background-image: url(bbbb.png);
+		}
+			#dog{
+				top: -80px;
+				width: 30px;
+				height: 45px;
+				background-image: url(ddd.png);
+				position: absolute;
+		}
+			#basket {
+				width: 100px;
+				height: 150px;
+				position: absolute;
+				bottom: 0;
+				z-index: 222;
+		}
+			
+			#score {
+				text-align: center;
+				width: 30px;
+				height: 20px;
+				/*border: 1px solid yellow;*/
+				
+				color: whitesmoke;
+				font-size: 20px;
+		}
+
+		    #over{
+		    	top: 0;
+		    	left: 0;
+				width: 100%;
+				height: 200%;
+				z-index: 333;
+				text-align: center;
+				position: absolute;
+				background-color: black;
+
+        }
+			#span1{
+	            color: white;
+                line-height:1000%;
+                font-size: 50px;
+        }
+       p{
+       	width: 100%;
+       	/*margin-left: 4%;*/
+       	font-size: 1842%;
+       	position: absolute;
+       	text-align: center;
+       	color:rgba(253,231,119,0.5);
+       }
+		</style>
+		<script src="touch.js"></script>
+	</head>
+
+<body>
+	<div id="wrap">
+		<audio src="" id="audio"></audio>
+		<p id="p1"> <span id="cal">3</span></p>
+		<div id="over">
+			<span id="span1"></span>
+		</div>
+			<!-- <img id="basket" src="Minions.png" /> -->
+		<div id="score">0</div>
+	</div>
+</body>
+
+	<script type="text/javascript">
+	/*
+     by:田
+     data：2016/11/19
+	*/ 
+function callback(){
+	var a =document.getElementById('audio');
+	var p1=document.getElementById('p1');
+    var cal=document.getElementById('cal');
+    var wrap=document.getElementById('wrap');
+	var basket=document.getElementById('basket');
+	// var basketWidth=basket.style.width();
+	// alert(basketWidth);
+	var disx=basket.offsetLeft;
+    var index = 0;//分数
+    var h = 0;
+
+    //封装倒计时函数
+	//t1为t，b1为bb ，tar为score ，wrap1就是wrap， ind为index，bask为basket ，music为a
+	
+
+
+
+
+
+
+    function fnRand(min,max){
+		var k=Math.random()*(max-min)+min;
+	    return	parseInt(k);
+    }
+		
+		var timer = null;
+		var drop_timer = null;
+   
+        
+
+		// 获取最新的left值
+		var newl = 0;
+		var d = 3;//倒计时
+
+
+
+
+
+
+
+
+		
+		function drap(t1,b1,tar,ind,wrap1,bask,music,hei){ 
+		return function(){
+		t1+=5;
+		b1.style.top = t1 + 'px';
+		 hei = b1.offsetTop + b1.offsetHeight-10;
+		 
+		if (bask.offsetTop < hei && b1.offsetLeft > bask.offsetLeft && b1.offsetLeft < bask.offsetWidth + bask.offsetLeft){if(b1.id=="banana"){ind += 10;music.src="get.mp3";music.play();wrap1.removeChild(b1);}
+			else{ind-=10;music.src="lose.mp3";music.play();wrap1.removeChild(b1);}
+			
+			tar.innerHTML = ind;
+		}
+		if (b1.offsetTop > 500) {
+			wrap1.removeChild(b1);
+	}
+}
+	}
+		
+	
+		function dao(dTime,para,wrap){
+			return function(){
+			dTime--;
+		if(dTime==0){
+			clearInterval(timer);
+			clearInterval(drop_timer);
+			
+			
+			para.style.fontSize="680%";
+			
+			dTime="GAME OVER";
+		}
+		var b = document.createElement('div');
+		 b.id =(fnRand(0,100)>40)?"banana":"dog";
+		
+		b.style.left = fnRand(0,330) + 'px';
+	cal.innerHTML=dTime;
+		wrap.appendChild(b);
+		//		
+		aa(b);
+}
+}
+
+
+
+
+
+
+	
+
+	
+			
+
+
+
+			function aa(bb) {
+			var t = 0;
+			var bb= bb;
+
+		drop_timer = setInterval(drap(t,bb,score,index,wrap,basket,a,h)	,50); //调用计时器
+	}
+		
+	timer = setInterval(dao(d,p1,wrap),1000); //调用计时器2
+			// function() {
+		//开始暂停
+
+// 		var tf=1;
+// 		wrap.onclick=function(){
+		
+		
+// 		if(tf==1){
+// 			tf=0;alert(tf);
+// 			clearInterval(timer);
+// 			clearInterval(drop_timer);
+// 		}
+// 		else{
+
+// 			tf=1;
+// 			alert(tf);
+// 			timer = setInterval(dao(d,p1,wrap),1000);
+// 			// drop_timer = setInterval(drap(t,bb,score,index,wrap,basket,a,h)	,25);
+// 		}
+// }
+
+
+		touch.on("#basket", "touchstart", function(e) {
+			e.preventDefault();
+		});
+		
+		touch.on("#basket", "drag", function(e) {
+			//	alert('a');
+			newl = e.x + disx;
+			
+			if(newl<0){newl=0;}
+			// // alert(.Width);	
+			 if(newl>document.body.offsetWidth-100){newl=document.body.offsetWidth-90;}
+			 console.log(document.body.offsetWidth);
+			this.style.left = newl + 'px';
+			// alert(this.style.left);
+		    });
+		touch.on("#basket", "dragend", function() {
+			
+			disx = this.offsetLeft;
+		});
+			}
+
+	//不能超过两边
+			
+	
+    var over=document.getElementById('over');
+    var span1=document.getElementById('span1');
+    var load_index=0;
+    var arr=["Minions.png"];
+    var imgs=[];//存图片的名字
+    for(var i=0;i<arr.length;i++){
+    	var imgObj=new Image();
+    	imgObj.src=arr[i];
+        imgObj.onload=function(){
+        	load_index++;
+        	span1.innerHTML=parseInt(load_index/arr.length*100)+"%";
+        	if(load_index==arr.length){
+
+
+        	imgs.push(this);
+        	for(var j=0;j<imgs.length;j++){
+        		imgs[j].id="basket";
+        		wrap.appendChild(imgs[j]);
+                over.style.display="none";
+//预加载
+        	}
+        }
+  callback();
+
+	
+    }
+    }
+	
+	//暂停
+
+	// var wrap = document.getElementById('wrap');
+	// wrap.onclick=function pause(){
+	// 	clearInterval(timer);
+	// 	clearInterval(drop_timer);
+	// }
+
+ 
+	
+
+	</script>
+</html>
