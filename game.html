@@ -96,7 +96,7 @@
 	<script type="text/javascript">
 	/*
      by:田
-     data：2015/7/9
+     data：2016/11/19
 	*/ 
 function callback(){
 	var a =document.getElementById('audio');
@@ -143,6 +143,9 @@ function callback(){
 		}, 25);
 	}
 		timer = setInterval(function() {
+
+			
+			
 			d--;
 			if(d==0){
 				clearInterval(timer);
@@ -156,7 +159,7 @@ function callback(){
 			var b = document.createElement('div');
 			 b.id =(fnRand(0,100)>40)?"banana":"dog";
 			
-			b.style.left = fnRand(0,350) + 'px';
+			b.style.left = fnRand(0,330) + 'px';
 		cal.innerHTML=d;
 			wrap.appendChild(b);
 			//		
@@ -206,6 +209,13 @@ function callback(){
     }
     }
 	
+	//暂停
+
+	// var wrap = document.getElementById('wrap');
+	// wrap.onclick=function pause(){
+	// 	clearInterval(timer);
+	// 	clearInterval(drop_timer);
+	// }
 
 
 	</script>
