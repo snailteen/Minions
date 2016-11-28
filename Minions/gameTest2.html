@@ -78,19 +78,63 @@
        	color:rgba(253,231,119,0.5);
        }
 
-       #one{
-       	width:100px;
-		height: 100px;
-		position: absolute;
-		background: black;
+       #pause{
+       	width:60px;
+		height: 60px;
+		/*position: absolute;*/
+		background: rgba(0,0,0,0.2);
+		text-align: center;
+		line-height: 3.7em;
+		margin-right: 3%;
+		border: 0;
+		border-radius: 50%;
+		margin-top: 1rem;
+
        }
+       #restart{
+       	width:60px;
+		height: 60px;
+		background: rgba(0,0,0,0.2);
+		text-align: center;
+		line-height: 3.7em;
+		margin-right:3%;
+		border: 0;
+		border-radius: 50%;
+		margin-top: 1rem;
+       }
+
+       #end{
+       	z-index: 11111;
+		display: none;
+		text-align: center;
+		position: absolute;
+		top: 12.5rem;
+		left: 6rem;
+		border: 1px solid rgba(0,0,0,0.2);
+		background: rgba(0,0,0,0.4);
+		width: 50%;
+		/*height: 40%;*/
+		font-size: 1.5rem;
+		border-radius: 20px;	
+		}
+
+
+
+		#end div{
+			border: 3px solid black;
+			border-radius: 20px;
+			margin-top: 4rem
+
+		}
+
 		</style>
 		<script src="touch.js"></script>
 	</head>
 
 <body>
 	<div id="wrap">
-	<div id="one"></div>
+	<div id="pause">pause</div>
+	<div id="restart">reatart</div>
 		<audio src="" id="audio"></audio>
 		<p id="p1"> <span id="cal">20</span></p>
 		<div id="over">
@@ -99,13 +143,23 @@
 			<!-- <img id="basket" src="Minions.png" /> -->
 		<div id="score">0</div>
 	</div>
-</body>
 
+	<div id="end">
+<span id="title">GAME OVER</span>
+<br><br>
+你的总分：<span id="sum"></span>
+<div id="again">重来</div>
+<div id="quit">返回选择列表</div>
+
+</div>
+</body>
+	<<script src="jquery-3.1.0.min.js"></script>
 	<script type="text/javascript">
 	/*
      by:田
      data：2016/11/19
 	*/ 
+
 function callback(){
 	var a =document.getElementById('audio');
 	var p1=document.getElementById('p1');
@@ -117,6 +171,12 @@ function callback(){
     var h = 0;
     var update = 5;
 
+
+    var end = document.getElementById('end');
+	var sum = document.getElementById('sum');
+	var again = document.getElementById('again');
+	var quit = document.getElementById('quit');
+    // var pause=document.getElementById('one');
 
     //封装倒计时函数
 	//t1为t，b1为bb ，tar为score ，wrap1就是wrap， ind为index，bask为basket ，music为a
@@ -203,8 +263,12 @@ timeZero();
 			// clearInterval(drop_timer);
 			clearInterval(create_timer);
 			para.style.fontSize="680%";
-			
 			cal.innerHTML="GAME OVER";
+			sum.innerHTML=index;
+			end.style.display="block";
+
+
+
 			
 		}else{
 			dTime--;
@@ -213,46 +277,31 @@ timeZero();
 		}
 	}
 		
-		var tf=1;
-		wrap.onclick=function(){
-		
-		if(tf==1){
-			tf=0;
-			alert(tf);
-			clearInterval(timer);//清除时间
-			clearInterval(create_timer);//创建物体
-			
-		}
-		else{
-			tf=1;
-create_timer = setInterval(create(),1000);
-			
-	
 
-	
+//暂停和继续
+		var tf=1;
+	$('#pause').click(function(){
+	if(tf==1){
+	tf=0;
+	$('#one').html('continue');
+	clearInterval(timer);//清除时间
+	clearInterval(create_timer);//创建物体
+
+	}
+	else{
+	$('#pause').html('pause');
+	tf=1;
+	create_timer = setInterval(create(),1000);
 	timer = setInterval(dao(cal.innerHTML,p1),1000); //调用倒计时计时器
-	
+
 
 	function aa(bb) {
-			var t = 0;
-			var bb= bb;
+	var t = 0;
+	var bb= bb;
 	drop_timer = setInterval(drap(t,bb,score,wrap,basket,a,h),50); //调用下落计时器
-	}
-
-
-	
 		}
-		
-}
-
-
-
-
-
-	
-
-	
-			
+	}
+		});		
 
 	function timeZero(b1){
 
@@ -284,7 +333,7 @@ create_timer = setInterval(create(),1000);
 			
 			if(newl<0){newl=0;}
 			// // alert(.Width);	
-			 if(newl>document.body.offsetWidth-100){newl=document.body.offsetWidth-90;}
+			 if(newl>document.body.offsetWidth-100){newl=document.body.offsetWidth-90;}//不能超过两边
 			 console.log(document.body.offsetWidth);
 			this.style.left = newl + 'px';
 			// alert(this.style.left);
@@ -295,8 +344,12 @@ create_timer = setInterval(create(),1000);
 		});
 			}
 
-	//不能超过两边
-			
+	
+	$('#restart').click(function(){
+		
+location.reload();
+
+ });
 	
     var over=document.getElementById('over');
     var span1=document.getElementById('span1');
@@ -320,6 +373,7 @@ create_timer = setInterval(create(),1000);
 //预加载
         	}
         }
+
   callback();
 
 	
